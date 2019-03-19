@@ -2,9 +2,10 @@
   (:refer-clojure :exclude [compile])
   (:require [clojure.spec.alpha :as spec]
             [clojure.string]
-            [clojure.walk]))
+            [clojure.walk])
+  (:import [cljs.tagged_literals JSValue]))
 
-;; Type fns
+;; Type
 
 (defn component-tag?
   "True if keyword represents a user-defined component."
@@ -23,9 +24,65 @@
   ;; For user-defined components, perserve the namespace.
   (if (component-tag? k) (symbol k) (name k)))
 
-;; Props fns
+;; Keyword props
 
-;; TODO: props fns
+(def id-class-pattern
+  #"(?:#[^.]*)|(?:\.[^#.]*)")
+
+(defn keyword->props-map
+  [k]
+  (let [{ids \# classes \.} (->> (name k)
+                                 (re-seq id-class-pattern)
+                                 (group-by first))]
+    (cond-> nil
+      ids     (assoc :id (subs (first ids) 1))
+      classes (assoc :className (->> (map #(subs % 1) classes)
+                                     (clojure.string/join " "))))))
+
+;; Map props
+
+(defn map->className-form [m]
+  `(-> ~m
+       (eduction (filter val)
+                 (map (comp name key)))
+       (into-array)
+       (.join " ")))
+
+(defmulti map->props-map-entry key)
+
+(defmethod map->props-map-entry ::classes
+  [[_ m]]
+  [:className (map->className-form m)])
+
+(defmethod map->props-map-entry :default
+  [entry]
+  entry)
+
+(defn map->props-map [m]
+  (into {} (map map->props-map-entry) m))
+
+;; Props
+
+(defprotocol Props
+  (transform-props* [this]))
+
+(extend-protocol Props
+  clojure.lang.Keyword
+  (transform-props* [this]
+    (->> (keyword->props-map this)
+         (JSValue.)))
+  clojure.lang.PersistentArrayMap
+  (transform-props* [this]
+    (->> (map->props-map this)
+         (JSValue.)))
+  clojure.lang.PersistentHashMap
+  (transform-props* [this]
+    (->> (map->props-map this)
+         (JSValue.)))
+  Object
+  (transform-props* [this] this)
+  nil
+  (transform-props* [this] nil))
 
 ;; Conform spec
 
@@ -60,7 +117,7 @@
 
 (def ^:dynamic transform-tag tag->type)
 
-(def ^:dynamic transform-props identity)
+(def ^:dynamic transform-props transform-props*)
 
 (defn ^:dynamic transform-element
   "Transform a conformed element into a conformed create-element-form."

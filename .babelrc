@@ -1,0 +1,7 @@
+{
+    /*
+        Ignore cljs generated js files.
+        Also ignored in package.json under `transformIgnorePatterns`.
+    */
+    "ignore": ["./test-js/components.js"]
+}

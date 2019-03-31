@@ -15,4 +15,10 @@
     {:git/url "https://github.com/cognitect-labs/test-runner.git"
      :sha     "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}
    :extra-paths ["test"]
-   :main-opts   ["-m" "cognitect.test-runner"]}}}
+   :main-opts   ["-m" "cognitect.test-runner"]}
+
+  :test-js/build
+  {:extra-paths ["test-js/__cljs__"]
+   :main-opts   ["-m" "cljs.main"
+                 "-co" "test-js/__cljs__/cljsc_opts.edn"
+                 "-c"]}}}

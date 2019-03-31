@@ -128,7 +128,9 @@
   (cond-> m
     true                           (assoc ::fn *create-element-fn*)
     true                           (assoc ::type (transform-tag (::tag m)))
-    ;; If props was skipped, props is nil.
+    ;; If props was skipped, set props to nil.
+    ;; When we unform, the props arg to js/React.createElement has
+    ;; nil as its value.
     (and (not (contains? m ::props))
          (contains? m ::children)) (assoc ::props nil)
     (contains? m ::props)          (update ::props transform-props)))

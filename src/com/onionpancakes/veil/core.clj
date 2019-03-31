@@ -89,13 +89,16 @@
 (def ^:dynamic *create-element-fn*
   `js/React.createElement)
 
+(def props?
+  (some-fn nil? keyword? map?))
+
 (spec/def ::element-form
   (spec/and
    (spec/coll-of any? :kind vector?)
    (complement map-entry?) ; Do not match map entry vectors.
    (comp not ::skip meta)  ; Skip vectors with ^::skip
    (spec/cat ::tag keyword?
-             ::props (spec/? any?)
+             ::props (spec/? props?)
              ::children (spec/* ::form))))
 
 (spec/def ::create-element-form
@@ -123,9 +126,12 @@
   "Transform a conformed element into a conformed create-element-form."
   [m]
   (cond-> m
-    true (assoc ::fn *create-element-fn*)
-    true (assoc ::type (transform-tag (::tag m)))
-    (contains? m ::props) (update ::props transform-props)))
+    true                           (assoc ::fn *create-element-fn*)
+    true                           (assoc ::type (transform-tag (::tag m)))
+    ;; If props was skipped, props is nil.
+    (and (not (contains? m ::props))
+         (contains? m ::children)) (assoc ::props nil)
+    (contains? m ::props)          (update ::props transform-props)))
 
 ;; Compile
 

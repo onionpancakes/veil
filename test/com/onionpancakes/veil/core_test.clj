@@ -32,3 +32,11 @@
     [:foo.bar]        '(js/React.createElement foo.bar)
     [::Foo]           `(js/React.createElement Foo)
     [:foo/Bar]        '(js/React.createElement foo/Bar)))
+
+(deftest test-compile*-no-props
+  (are [x y] (= (c/compile* x) y)
+    [:div "foo"]  '(js/React.createElement "div" nil "foo")
+    [:div 'foo]   '(js/React.createElement "div" nil foo)
+    [:div [:div]] '(js/React.createElement "div" nil
+                     (js/React.createElement "div"))
+    [:div '(foo)] '(js/React.createElement "div" nil (foo))))

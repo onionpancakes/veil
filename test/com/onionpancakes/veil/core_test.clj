@@ -40,3 +40,13 @@
     [:div [:div]] '(js/React.createElement "div" nil
                      (js/React.createElement "div"))
     [:div '(foo)] '(js/React.createElement "div" nil (foo))))
+
+(deftest test-compile*-js-props
+  ;; Compare props map
+  (are [x y] (= (some-> (c/compile* x) (nth 2) (.val)) y)
+    [:div "foo"]             nil
+    [:div nil "foo"]         nil
+    [:div {} "foo"]          {}
+    [:div {:id "foo"} "foo"] {:id "foo"}
+    [:div :.foo]             {:className "foo"}
+    [:div :.foo#bar.baz#buz] {:id "bar" :className "foo baz"}))

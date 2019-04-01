@@ -17,6 +17,8 @@
     "update-tests": "jest --updateSnapshot"
   },
   "jest": {
-    "transformIgnorePatterns": ["<rootDir>/test-js/components.js"]
+    "transformIgnorePatterns": [
+      "<rootDir>/test-js/components.js"
+    ]
   }
 }

@@ -14,11 +14,16 @@ Veil is a deps project available from its git coordinate. Add the following to y
 
 ### Requirements
 
-* Clojure 1.10.0.
-* `React` in scope.
-* `npm` to run tests.
+* Clojure 1.10.0 or later.
+* `React` must be in scope.
 
 ### Running tests
+
+Install npm deps:
+
+```bash
+$ npm i
+```
 
 To running tests, execute:
 

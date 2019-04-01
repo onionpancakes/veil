@@ -63,6 +63,6 @@ Combine `compile` with `defn` to write functional components.
 Use `compile` where `React.createElement` would be needed.
 
 ```clojure
-(js/ReactDOM.render (h/compile [:MyComponent])
+(js/ReactDOM.render (v/compile [:MyComponent])
                     (js/document.getElementById "app"))
 ```

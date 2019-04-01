@@ -100,14 +100,30 @@ When Veil sees a capitalized tag, the keyword is converted to a symbol.
 
 ### Namespace is preserved for capitalized tags
 
-For components with capitalized tags, the namespace on the tag is preserved. This allows components to be reference from other namespaces.
+For components with capitalized tags, the namespace on the tag is preserved. This allows components to be referenced from other namespaces.
 
 ```clojure
-(v/compile [:other.ns/MyOtherComponent])
+(v/compile [:my-ns/MyOtherComponent])
 
 ;; expands into
 
-(js/React.createElement other.ns/MyOtherComponent)
+(js/React.createElement my-ns/MyOtherComponent)
+```
+
+Use namespace aliases in keywords as normal.
+
+```clojure
+(v/compile [::my-ns-alias/MyOtherComponent])
+```
+
+Refer to components in the same namespace with global keywords or double colon keywords.
+
+```clojure
+(v/compile [:MyOtherComponentHere])
+
+;; or
+
+(v/compile [::MyOtherComponentHere])
 ```
 
 ### Accessing React features

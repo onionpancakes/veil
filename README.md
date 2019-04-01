@@ -185,22 +185,21 @@ Keyword vectors anywhere inside a props will not be transformed into React eleme
    "My Button"])
 ```
 
+### Vectors with `::v/skip` are not elements.
+
+Use `^::v/skip` to escape keyword vectors which should not be React elements.
+
+```clojure
+(v/compile [:div (get my-map ^::v/skip [:not :an :element])])
+```
+
 ### Vectors in map keys are not elements.
 
 Map keys will not be transformed into React elements.
 
 ```clojure
 (v/compile
-  (let [{[:not :an :element] ; Will not be an element.
-         [:div "foo"]}       ; Will be an element.
-        ]
-    [:div ]))
-```
-
-### Vectors with `::v/skip` are not elements.
-
-Use `^::v/skip` to escape keyword vectors which should not be React elements.
-
-```clojure
-(v/compile [:div (get-in my-map ^::v/skip [:not :an :element])])
+  (let [my-map {[:not :an :element] ; Will not be an element.
+                [:div "foo"]}]      ; Will be an element.
+    [:div (get my-map ^::v/skip [:not :an :element])]))
 ```

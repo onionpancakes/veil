@@ -3,19 +3,15 @@
  :paths ["src"]
 
  :aliases
- {:dev {:extra-paths ["dev"]}
-
-  :test
-  {:extra-deps  {org.clojure/test.check {:mvn/version "0.9.0"}}
-   :extra-paths ["test"]}
+ {:dev  {:extra-paths ["dev"]}
+  :test {:extra-paths ["test"]}
   
   :run-tests
   {:extra-deps
    {com.cognitect/test-runner
     {:git/url "https://github.com/cognitect-labs/test-runner.git"
      :sha     "209b64504cb3bd3b99ecfec7937b358a879f55c1"}}
-   :extra-paths ["test"]
-   :main-opts   ["-m" "cognitect.test-runner"]}
+   :main-opts ["-m" "cognitect.test-runner"]}
 
   :test-js/build
   {:extra-paths ["test-js/__cljs__"]

@@ -1,4 +1,6 @@
 .cpcache
+.vscode
+
 out
 node_modules
 test-js/components.js

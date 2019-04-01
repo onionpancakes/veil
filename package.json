@@ -13,7 +13,8 @@
     "react-test-renderer": "^16.8.6"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "update-tests": "jest --updateSnapshot"
   },
   "jest": {
     "transformIgnorePatterns": ["<rootDir>/test-js/components.js"]

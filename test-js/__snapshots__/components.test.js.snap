@@ -2,6 +2,63 @@
 
 exports[`Widget 1`] = `
 <div>
-  foo
+  text
+</div>
+`;
+
+exports[`WidgetFor 1`] = `
+<div>
+  <p>
+    text0
+  </p>
+  <p>
+    text1
+  </p>
+  <p>
+    text2
+  </p>
+  <p>
+    text3
+  </p>
+  <p>
+    text4
+  </p>
+</div>
+`;
+
+exports[`WidgetFragment 1`] = `
+<div>
+  <div>
+    foo
+  </div>
+  <div>
+    bar
+  </div>
+</div>
+`;
+
+exports[`WidgetKeyword 1`] = `
+<div
+  className="bar baz"
+  id="foo"
+>
+  text
+</div>
+`;
+
+exports[`WidgetMapProps 1`] = `
+<div
+  className="yes1 yes2"
+  id="foo"
+>
+  text
+</div>
+`;
+
+exports[`WidgetNested 1`] = `
+<div>
+  <div>
+    text
+  </div>
 </div>
 `;

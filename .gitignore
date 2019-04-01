@@ -1,3 +1,4 @@
 .cpcache
 out
 node_modules
+test-js/components.js

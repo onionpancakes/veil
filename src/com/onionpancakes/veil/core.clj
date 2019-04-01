@@ -42,9 +42,9 @@
 ;; Map props
 
 (defn map->className-form [m]
-  `(-> ~m
-       (eduction (filter val)
-                 (map (comp name key)))
+  `(-> (eduction (filter val)
+                 (map (comp name key))
+                 ~m)
        (into-array)
        (.join " ")))
 

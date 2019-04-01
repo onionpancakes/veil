@@ -1,0 +1,24 @@
+{:deps  {org.clojure/clojure       {:mvn/version "1.10.0"}
+         org.clojure/clojurescript {:mvn/version "1.10.520"}
+         com.onionpancakes/veil    {:local/root "../../."}}
+ :paths ["src"]
+
+ :aliases
+ {:build
+  {:main-opts ["-m" "cljs.main"
+               "-c" "com.onionpancakes.veil.example.todo.app"]}
+
+  :build/adv
+  {:main-opts ["-m" "cljs.main"
+               "-co" "{:infer-externs,true}"
+               "-O" "advanced"
+               "-c" "com.onionpancakes.veil.example.todo.app"]}
+
+  :serve
+  {:main-opts ["-m" "cljs.main"
+               "-c" "com.onionpancakes.veil.example.todo.app"
+               "--serve"]}
+  :watch
+  {:main-opts ["-m" "cljs.main"
+               "-w" "src"
+               "-c" "com.onionpancakes.veil.example.todo.app"]}}}

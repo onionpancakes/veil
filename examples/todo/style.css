@@ -1,0 +1,15 @@
+.TodoApp > * {
+    margin: 16px 0;
+}
+
+.TodoApp-placeholder {
+    color: grey;
+}
+
+.TodoTask {
+    margin: 8px 0;
+}
+
+.done {
+    text-decoration: line-through;
+}

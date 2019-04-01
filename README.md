@@ -144,20 +144,20 @@ React only works with JavaScript objects for props. Veil converts map props into
 Veil doesn't not convert kabob-case to camelCase. Use camelCase like normal React.
 
 ```clojure
-(v/compile [:div {:class-name "foo bar"}]) ; ❌
+(v/compile [:div {:class-name "foo bar"}]) ; No
 
-(v/compile [:div {:className "foo bar"}])  ; ✔️
+(v/compile [:div {:className "foo bar"}])  ; Yes
 ```
 
 ### Use `::v/classes` to manage `className` at runtime
 
-The key `::v/classes` must have a map as a value. The keys in the map are interprested as classes and the values can be any expression. If the expression is truhty, the class is included within `className`.
+The key `::v/classes` must have a map as a value. The keys in the map are interpreted as classes and the values can be any expression. If the expression is truthy, the class is included within `className`.
 
 ```clojure
 (v/compile
   [:div {::v/classes {:foo (= 0 0) ; foo will be in className
                       :bar (= 0 1) ; bar will not be in className
-                      :buz any-truthy-value}}])
+                      :buz my-truthy-value}}])
 ```
 
 ### Use keyword props to declare `id` and `className`

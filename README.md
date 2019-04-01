@@ -162,7 +162,7 @@ The key `::v/classes` must have a map as a value. The keys in the map are interp
 
 ### Use keyword props to declare `id` and `className`
 
-Keywords props expand into `id` and `className` keys in the props object.
+Keywords props expand into `id` and `className` keys in the props object at compile time.
 
 ```clojure
 (v/compile [:div :#foo.bar.baz])

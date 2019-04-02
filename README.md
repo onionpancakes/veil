@@ -184,6 +184,16 @@ Veil doesn't not convert kabob-case to camelCase. Use camelCase like normal Reac
 (v/compile [:div {:className "foo bar"}])  ; Yes
 ```
 
+### Pass JavaScript objects to keys such as `:style`
+
+For global keys, Veil does not transform their values. React expects JavaScript object for keys such as `:style`.
+
+```clojure
+(v/compile [:div {:style {:color "green"}} "foo"])     ; No
+
+(v/compile [:div {:style #js {:color "green"}} "foo"]) ; Yes
+```
+
 ### Use `::v/classes` to manage `className` at runtime
 
 The key `::v/classes` must have a map as a value. The keys in the map are interpreted as classes and the values can be any expression. If the expression is truthy, the class is included within `className`.

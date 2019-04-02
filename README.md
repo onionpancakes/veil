@@ -195,9 +195,9 @@ For global keys, Veil does not transform their values. React expects JavaScript 
 (v/compile [:div {:style #js {:color "green"}} "foo"]) ; Yes
 ```
 
-### Use `::v/classes` to manage `className` at runtime
+### Use `::v/classes` to manage `:className` at runtime
 
-The key `::v/classes` must have a map as a value. The keys in the map are interpreted as classes and the values can be any expression. If the expression is truthy, the class is included within `className`.
+The key `::v/classes` must have a map as a value. The keys in the map are interpreted as classes and the values can be any expression. If the expression is truthy, the class is included within `:className`.
 
 ```clojure
 (v/compile
@@ -206,9 +206,9 @@ The key `::v/classes` must have a map as a value. The keys in the map are interp
                       :buz my-truthy-value}}])
 ```
 
-### Use keyword props to declare `id` and `className`
+### Use keyword props to declare `:id` and `:className`
 
-Keywords props expand into `id` and `className` keys in the props object at compile time.
+Keywords props expand into `:id` and `:className` keys in the props object at compile time.
 
 ```clojure
 (v/compile [:div :#foo.bar.baz])

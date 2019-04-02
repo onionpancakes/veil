@@ -8,10 +8,10 @@ With the release of React hooks, it is now strait forward to write React compone
 
 ### Why Veil vs other templating libraries?
 
-* Vectors are expanded to `React.createElement` calls at compile time.
-* Support for user-defined components.
-* Support for React components such as `Fragments` and `Contexts`.
-* Simple as heck. Thin pass through to React. Source is less than 200 lines.
+* Vectors expands directly to `React.createElement` calls. There is no wrapper!
+* All expansions to `React.createElement` happen at compile time.
+* Support for user-defined components and React components such as `React.Fragment`.
+* Simple as heck. Direct pass through to `React`. Source is less than 200 lines.
 
 ## Getting started
 

@@ -77,6 +77,17 @@ Combine `compile` with `defn` to write functional components.
     [:p "Foo bar baz"]]))
 ```
 
+Then combine functional components with [hooks](https://reactjs.org/docs/hooks-intro.html) as needed.
+
+```clojure
+(defn Example [props]
+  (let [[st st!] (js/React.useState 0)]
+    (v/compile
+     [:div
+      [:p (str "You clicked " st "times")]
+      [:button {:onClick #(st! (inc st))} "Click me"]])))
+```
+
 Use `compile` where `React.createElement` would be needed.
 
 ```clojure
@@ -86,7 +97,7 @@ Use `compile` where `React.createElement` would be needed.
 
 ### Capitalize tags for user-defined components
 
-Veil follows JSX's semantics[<sup>[Link]</sup>](https://reactjs.org/docs/jsx-in-depth.html#specifying-the-react-element-type) when determining the type of the element.
+Veil follows JSX's [type semantics](https://reactjs.org/docs/jsx-in-depth.html#specifying-the-react-element-type) when determining the type of the element.
 
 When Veil sees a capitalized tag, the keyword is converted to a symbol.
 
@@ -128,23 +139,15 @@ Refer to components in the same namespace with global keywords or double colon k
 
 ### Accessing React features
 
-Access React features with capitalized components, the `js` namespace, and dot access.
+Access React features with dot access.
 
-#### Fragments[<sup>[Link]</sup>](https://reactjs.org/docs/fragments.html)
+#### Fragments
 
 ```clojure
 (v/compile
   [:js/React.Fragment
    [:div "foo"]
    [:div "bar"]])
-```
-
-#### Contexts[<sup>[Link]</sup>](https://reactjs.org/docs/context.html)
-
-```clojure
-(v/compile
-  [:js/MyContext.Provider {:value some-value}
-   [:MyComponent]])
 ```
 
 ### Props must be maps or keywords
@@ -217,7 +220,7 @@ Keyword vectors anywhere inside a props will not be transformed into React eleme
    "My Button"])
 ```
 
-### Vectors with `::v/skip` are not elements.
+### Vectors with `^::v/skip` are not elements.
 
 Use `^::v/skip` to escape keyword vectors which should not be React elements.
 

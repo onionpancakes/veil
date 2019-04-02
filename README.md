@@ -81,11 +81,12 @@ Then combine functional components with [hooks](https://reactjs.org/docs/hooks-i
 
 ```clojure
 (defn Example [props]
-  (let [[st st!] (js/React.useState 0)]
+  (let [[cur-count set-count!] (js/React.useState 0)]
     (v/compile
      [:div
-      [:p (str "You clicked " st "times")]
-      [:button {:onClick #(st! (inc st))} "Click me"]])))
+      [:p (str "You clicked " cur-count " times")]
+      [:button {:onClick #(set-count! (inc cur-count))}
+       "Click me"]])))
 ```
 
 Use `compile` where `React.createElement` would be needed.

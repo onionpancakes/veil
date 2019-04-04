@@ -8,10 +8,14 @@ With the release of React [hooks](https://reactjs.org/docs/hooks-intro.html), it
 
 ### Why Veil vs other templating libraries?
 
-* Vectors expands directly to `React.createElement` calls. There is no wrapper!
-* All expansions to `React.createElement` happen at compile time.
-* Support for user-defined components and React components such as `React.Fragment`.
-* Simple as heck. Direct pass through to `React`. Source is less than 200 lines.
+* **No wrapping code!** Vectors transform directly into `React.createElement` calls at compile time.
+* Easy to write functional components that interops well with other React features *(hooks, context, memo, etc...)* without the need of special code.
+* Support for user-defined and React-defined components with the same consistent syntax.
+* Very small codebase of less than 200 lines.
+
+### Tradeoffs
+
+* You will be expose directly to React and how it works. Beware of situations where React expects JavaScript objects (and not Clojure maps)!
 
 ## Getting started
 
@@ -138,11 +142,11 @@ Refer to components in the same namespace with global keywords or double colon k
 (v/compile [::MyOtherComponentHere])
 ```
 
-### Accessing React features
-
-Access React features with dot access.
+### React features
 
 #### Fragments
+
+Use dot access to access inner components.
 
 ```clojure
 (v/compile

@@ -8,14 +8,14 @@
         handleClear       (.-handleClear props)]
     (v/compile
      [:div :.TodoInput
-      [:input {:value      st
+      [:input {:ref        input-ref
+               :value      st
                :onChange   (fn [^js/Event e]
                              (st! (.. e -target -value)))
                :onKeyPress (fn [^js/Event e]
                              (when (and (= (.-key e) "Enter") (not= st ""))
                                (handleAdd st)
-                               (st! "")))
-               :ref        input-ref}]
+                               (st! "")))}]
       [:button {:onClick #(when (not= st "")
                             (handleAdd st)
                             (st! "")
@@ -24,12 +24,11 @@
       [:button {:onClick handleClear} "Clear"]])))
 
 (defn TodoTask [^js/TodoTaskProps props]
-  (let [done?      (.-done props)
-        text       (.-text props)
-        handleDone (.-handleDone props)]
+  (let [{:keys [done? text]} (.-task props)
+        handleDone           (.-handleDone props)]
     (v/compile
-     [:div {::v/classes {:TodoTask true
-                         :done     done?}}
+     [:div { ::v/classes {:TodoTask true
+                          :done     done?}}
       [:label
        [:input {:type     "checkbox"
                 :checked  done?
@@ -42,10 +41,9 @@
     (v/compile
      [:div
       (if-not (empty? tasks)
-        (for [[idx {:keys [id done? text]}] (map-indexed vector tasks)]
+        (for [[idx {:keys [id] :as task}] (map-indexed vector tasks)]
           [:TodoTask {:key        id
-                      :done       done?
-                      :text       text
+                      :task       task
                       :handleDone #(dispatch {:action :done :idx idx})}])
         [:i :.TodoApp-placeholder "What needs to be done?"])])))
 

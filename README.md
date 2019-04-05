@@ -142,17 +142,61 @@ Refer to components in the same namespace with global keywords or double colon k
 (v/compile [::MyOtherComponentHere])
 ```
 
-### React features
+### Use dot access to access inner components
+
+Because capitalized tags transform to symbols, you can use dot access to access inner components.
+
+```clojure
+(v/compile [:OuterThing.InnerThing])
+
+;; expands to
+
+(js/React.createElement OuterThing.InnerThing)
+```
+
+### Use React features directly
+
+A few examples using React's functionality.
 
 #### Fragments
 
-Use dot access to access inner components.
+https://reactjs.org/docs/fragments.html
 
 ```clojure
 (v/compile
-  [:js/React.Fragment
-   [:div "foo"]
-   [:div "bar"]])
+ [:js/React.Fragment
+  [:ChildA]
+  [:ChildB]
+  [:ChildC]])
+```
+
+#### Memo
+
+https://reactjs.org/docs/react-api.html#reactmemo
+
+```clojure
+(def MyComponent
+  (js/React.memo
+    (fn [props]
+      (v/compile
+       ;; render using props
+       ))))
+```
+
+#### Refs
+
+https://reactjs.org/docs/refs-and-the-dom.html
+
+```clojure
+(defn CustomTextInput [props]
+  (let [input-ref (js/React.createRef)]
+    (v/compile
+     [:div
+      [:input {:type "text"
+               :ref  input-ref}]
+      [:input {:type   "button"
+               :value  "Focus the text input"
+               :onClick #(.. input-ref -current focus)}]])))
 ```
 
 ### Props must be maps or keywords
@@ -181,7 +225,7 @@ React only works with JavaScript objects for props. Veil converts map props into
 
 ### Use camelCase for prop keys
 
-Veil doesn't not convert kabob-case to camelCase. Use camelCase like normal React.
+Veil does not convert prop keys from kabob-case to camelCase. Use camelCase like normal React.
 
 ```clojure
 (v/compile [:div {:class-name "foo bar"}]) ; No
@@ -201,13 +245,13 @@ For global keys, Veil does not transform their values. React expects JavaScript 
 
 ### Use `::v/classes` to build `:className` at runtime
 
-The key `::v/classes` must have a map as a value. The keys are classes and the values can be any expression. If the expression is truthy, the class is included within `:className`.
+The key `::v/classes` must have a map as a value. The keys are classes and the values can be any expression. If the expression returns a truthy value, the class is included within `:className`.
 
 ```clojure
 (v/compile
-  [:div {::v/classes {:foo true
-                      :bar false
-                      :baz (= 0 0)}}])
+ [:div {::v/classes {:foo true
+                     :bar false
+                     :baz (= 0 0)}}])
 
 ;; Values are evaluated at runtime!
 ;; Keys with truthy values are joined into :className.
@@ -232,14 +276,36 @@ Keywords props expand into `:id` and `:className` keys in the props object at co
 
 ### Vectors in props are not elements.
 
-Keyword vectors anywhere inside a props will not be transformed into React elements.
+Keyword vectors inside props will not be transformed into React elements.
 
 ```clojure
 (v/compile
-  [:button {:onClick (fn []
-                       ;; Sends a vector, not an element.
-                       (my-dispatch! [:action :foo]))}
-   "My Button"])
+ [:button {:onClick (fn []
+                      ;; Sends a vector, not an element.
+                      (my-dispatch! [:action :foo]))}
+  "My Button"])
+```
+
+### Passing components into props
+
+There are a few ways to pass components to another component's props.
+
+#### Call `compile` inside props.
+
+```clojure
+(v/compile
+ [:MyComponent {:children (v/compile 
+                           [[:ChildComponentA]
+                            [:ChildComponentB]])}])
+```
+
+#### Transform components outside of props.
+
+```clojure
+(v/compile
+ (let [children [[:ChildComponentA]
+                 [:ChildComponentB]]]
+   [:MyComponent {:children children}]))
 ```
 
 ### Vectors with `^::v/skip` are not elements.
@@ -256,7 +322,7 @@ Map keys will not be transformed into React elements.
 
 ```clojure
 (v/compile
-  (let [my-map {[:not :an :element] ; Will not be an element.
-                [:div "foo"]}]      ; Will be an element.
-    [:div (get my-map ^::v/skip [:not :an :element])]))
+ (let [my-map {[:not :an :element] ; Will not be an element.
+               [:div "foo"]}]      ; Will be an element.
+   [:div (get my-map ^::v/skip [:not :an :element])]))
 ```

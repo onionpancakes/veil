@@ -36,19 +36,19 @@ Veil is a deps project available from its git coordinate. Add the following to y
 
 Install npm deps:
 
-```bash
+```shell
 $ npm i
 ```
 
 To running tests, execute:
 
-```bash
+```shell
 $ make test
 ```
 
 To update test snapshots, execute:
 
-```bash
+```shell
 $ make update-tests
 ```
 

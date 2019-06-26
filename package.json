@@ -4,10 +4,10 @@
   "author": "onionpancakes",
   "license": "MIT",
   "devDependencies": {
-    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "babel-jest": "^24.5.0",
-    "jest": "^24.5.0",
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6"

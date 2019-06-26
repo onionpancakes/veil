@@ -24,7 +24,7 @@ Veil is a deps project available from its git coordinate. Add the following to y
 ```clojure
 {:deps {com.onionpancakes/veil
          {:git/url "https://github.com/onionpancakes/veil.git"
-          :sha     "42f78b50c2d032a0352de8706a8f983d5cdbb512"}}}
+          :sha     "4e485bf2cbf4c2c8c41e922583c7058af87839c1"}}}
 ```
 
 ### Requirements

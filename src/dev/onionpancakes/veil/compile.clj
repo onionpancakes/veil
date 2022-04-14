@@ -5,35 +5,6 @@
             [clojure.walk])
   (:import [cljs.tagged_literals JSValue]))
 
-;; Conform spec
-
-(def props?
-  (some-fn map? keyword? nil?))
-
-(spec/def ::element
-  (spec/and
-   (spec/coll-of any? :kind vector?)
-   (complement map-entry?)
-   (comp not ::skip meta)
-   (spec/cat ::tag keyword?
-             ::props (spec/? props?)
-             ::children (spec/* ::form))))
-
-(spec/def ::create-element
-  (spec/and
-   (spec/coll-of any? :kind list?)
-   (spec/cat ::fn any?
-             ::type any?
-             ::props (spec/? any?)
-             ::children (spec/* ::form))))
-
-(spec/def ::form
-  (spec/or ::element ::element
-           ::create-element ::create-element
-           ::map (spec/map-of any? ::form)
-           ::coll (spec/coll-of ::form)
-           ::other any?))
-
 ;; Tag
 
 (defn component-tag?
@@ -73,6 +44,8 @@
   (let [{ids \# classes \.} (->> (name k)
                                  (re-seq re-keyword-props)
                                  (group-by first))]
+    (if (and (empty? ids) (empty? classes))
+      (throw (ex-info (str "Keyword props " k " has no id or classes.") {:keyword k})))
     (cond-> nil
       ids     (assoc :id (subs (first ids) 1))
       classes (assoc :className (->> (map #(subs % 1) classes)
@@ -91,7 +64,41 @@
   nil
   (to-props [_] nil))
 
-;; Create element
+;; Conform spec
+
+(defn tag?
+  [x]
+  (keyword? x))
+
+(defn props?
+  [x]
+  (satisfies? IProps x))
+
+(spec/def ::element
+  (spec/and
+   (spec/coll-of any? :kind vector?)
+   (complement map-entry?)
+   (comp not ::skip meta)
+   (spec/cat ::tag tag?
+             ::props (spec/? props?)
+             ::children (spec/* ::form))))
+
+(spec/def ::create-element
+  (spec/and
+   (spec/coll-of any? :kind list?)
+   (spec/cat ::fn any?
+             ::type any?
+             ::props (spec/? any?)
+             ::children (spec/* ::form))))
+
+(spec/def ::form
+  (spec/or ::element ::element
+           ::create-element ::create-element
+           ::map (spec/map-of any? ::form)
+           ::coll (spec/coll-of ::form)
+           ::other any?))
+
+;; Compile
 
 (defn to-create-element
   [{::keys [tag props children]}]

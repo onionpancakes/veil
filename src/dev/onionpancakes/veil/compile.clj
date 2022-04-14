@@ -72,6 +72,13 @@
 (defprotocol ISkip
   (skip? [this]))
 
+(defn element-vec?
+  [x]
+  (and (vector? x)
+       (not (map-entry? x))
+       (or (not (satisfies? ISkip x))
+           (not (skip? x)))))
+
 (defn tag?
   [x]
   (keyword? x))
@@ -82,12 +89,7 @@
 
 (spec/def ::element
   (spec/and
-   (spec/coll-of any? :kind vector?)
-   (complement map-entry?)
-   ;; Element either does not satisfies ISkip protocol
-   ;; or if it does, skip? returns false.
-   (some-fn (complement (partial satisfies? ISkip))
-            (complement skip?))
+   (spec/coll-of any? :kind element-vec?)
    (spec/cat ::tag tag?
              ::props (spec/? props?)
              ::children (spec/* ::form))))
@@ -128,7 +130,3 @@
   (->> (spec/conform ::form form)
        (clojure.walk/postwalk element-to-create-element)
        (spec/unform ::form)))
-
-(defmacro compile
-  [form]
-  (compile* form))

@@ -1,5 +1,5 @@
-{:deps  {org.clojure/clojure       {:mvn/version "1.10.0"}
-         org.clojure/clojurescript {:mvn/version "1.10.520"}}
+{:deps  {org.clojure/clojure       {:mvn/version "1.11.0"}
+         org.clojure/clojurescript {:mvn/version "1.11.4"}}
  :paths ["src"]
 
  :aliases

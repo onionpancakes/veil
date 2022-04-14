@@ -66,6 +66,12 @@
 
 ;; Conform spec
 
+(def create-element-fn
+  `js/React.createElement)
+
+(defprotocol ISkip
+  (skip? [this]))
+
 (defn tag?
   [x]
   (keyword? x))
@@ -78,7 +84,10 @@
   (spec/and
    (spec/coll-of any? :kind vector?)
    (complement map-entry?)
-   (comp not ::skip meta)
+   ;; Element either does not satisfies ISkip protocol
+   ;; or if it does, skip? returns false.
+   (some-fn (complement (partial satisfies? ISkip))
+            (complement skip?))
    (spec/cat ::tag tag?
              ::props (spec/? props?)
              ::children (spec/* ::form))))
@@ -86,7 +95,7 @@
 (spec/def ::create-element
   (spec/and
    (spec/coll-of any? :kind list?)
-   (spec/cat ::fn any?
+   (spec/cat ::fn #{create-element-fn}
              ::type any?
              ::props (spec/? any?)
              ::children (spec/* ::form))))
@@ -99,9 +108,6 @@
            ::other any?))
 
 ;; Compile
-
-(def create-element-fn
-  `js/React.createElement)
 
 (defn to-create-element
   [{::keys [tag props children]}]

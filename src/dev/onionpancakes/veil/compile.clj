@@ -100,9 +100,12 @@
 
 ;; Compile
 
+(def create-element-fn
+  `js/React.createElement)
+
 (defn to-create-element
   [{::keys [tag props children]}]
-  {::fn       `js/React.createElement
+  {::fn       create-element-fn
    ::type     (tag-to-type tag)
    ::props    (to-props props)
    ::children children})

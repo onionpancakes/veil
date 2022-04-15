@@ -1,4 +1,4 @@
 (ns user
-  (:require [dev.onionpancakes.veil.core :as c]
-            [dev.onionpancakes.veil.compile :as cm]))
+  (:require [dev.onionpancakes.veil.core :as v]
+            [dev.onionpancakes.veil.compile :as c]))
 

@@ -22,9 +22,9 @@ With the release of React [hooks](https://reactjs.org/docs/hooks-intro.html), it
 Veil is a deps project available from its git coordinate. Add the following to your `deps.edn`.
 
 ```clojure
-{:deps {com.onionpancakes/veil
+{:deps {dev.onionpancakes/veil
          {:git/url "https://github.com/onionpancakes/veil.git"
-          :sha     "4e485bf2cbf4c2c8c41e922583c7058af87839c1"}}}
+          :git/sha "<commit sha goes here>"}}}
 ```
 
 ### Requirements
@@ -58,7 +58,7 @@ Require Veil in your ClojureScript file.
 
 ```clojure
 (ns myproject.app
-  (require-macros [com.onionpancakes.veil.core :as v]))
+  (:require [dev.onionpancakes.veil.core :as v]))
 ```
 
 Use the `compile` macro to transform keyword vectors into `React.createElement` calls.

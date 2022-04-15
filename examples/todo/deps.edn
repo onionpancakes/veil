@@ -6,19 +6,19 @@
  :aliases
  {:build
   {:main-opts ["-m" "cljs.main"
-               "-c" "com.onionpancakes.veil.example.todo.app"]}
+               "-c" "dev.onionpancakes.veil.example.todo.app"]}
 
   :build/adv
   {:main-opts ["-m" "cljs.main"
                "-co" "{:infer-externs,true}"
                "-O" "advanced"
-               "-c" "com.onionpancakes.veil.example.todo.app"]}
+               "-c" "dev.onionpancakes.veil.example.todo.app"]}
 
   :serve
   {:main-opts ["-m" "cljs.main"
-               "-c" "com.onionpancakes.veil.example.todo.app"
+               "-c" "dev.onionpancakes.veil.example.todo.app"
                "--serve"]}
   :watch
   {:main-opts ["-m" "cljs.main"
                "-w" "src"
-               "-c" "com.onionpancakes.veil.example.todo.app"]}}}
+               "-c" "dev.onionpancakes.veil.example.todo.app"]}}}

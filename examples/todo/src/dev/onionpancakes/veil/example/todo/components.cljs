@@ -1,5 +1,5 @@
-(ns com.onionpancakes.veil.example.todo.components
-  (:require-macros [com.onionpancakes.veil.core :as v]))
+(ns dev.onionpancakes.veil.example.todo.components
+  (:require [dev.onionpancakes.veil.core :as v]))
 
 (defn TodoInput [^js/TodoListProps props]
   (let [[st st!]          (js/React.useState "")

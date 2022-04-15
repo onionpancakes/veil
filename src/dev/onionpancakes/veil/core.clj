@@ -4,7 +4,7 @@
 
 (defmethod c/to-props-entry ::classes
   [[_ m]]
-  [:className `(toggle-classnames m)])
+  [:className `(toggle-classnames ~m)])
 
 (extend-protocol c/ISkip
   clojure.lang.APersistentVector

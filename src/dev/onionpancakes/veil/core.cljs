@@ -1,11 +1,12 @@
-(ns dev.onionpancakes.veil.core)
+(ns dev.onionpancakes.veil.core
+  (:require-macros [dev.onionpancakes.veil.core]))
 
-(defn toggle-classnames-xf
+(def toggle-classnames-xf
   (comp (filter val)
         (map (comp name key))))
 
 (defn toggle-classnames
   [m]
-  (-> (eduction kv-classname-xf m)
+  (-> (eduction toggle-classnames-xf m)
       (into-array)
       (.join " ")))

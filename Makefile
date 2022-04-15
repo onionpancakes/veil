@@ -3,13 +3,13 @@
 test: test-clj test-js
 
 test-clj:
-	clojure -A:test:run-tests
+	clojure -M:test:run-tests
 
 test-js: test-js/components.js
 	npm run test
 
-test-js/components.js: test-js/__cljs__/com/onionpancakes/veil/test_js/components.cljs
-	clj -A:test-js/build
+test-js/components.js: test-js/__cljs__/dev/onionpancakes/veil/test_js/components.cljs
+	clj -M:test-js/build
 
 # Update tests
 

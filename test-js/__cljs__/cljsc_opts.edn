@@ -1,4 +1,4 @@
-{:main          com.onionpancakes.veil.test-js.components
+{:main          dev.onionpancakes.veil.test-js.components
  :output-to     "test-js/components.js"
  :optimizations :advanced
  :infer-externs true

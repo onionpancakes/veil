@@ -1,5 +1,6 @@
 .cpcache
 .vscode
+.cljs_node_repl
 
 out
 node_modules

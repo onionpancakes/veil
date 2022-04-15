@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { com } from "./components";
+import "./components";
 
 const {
     Widget,
@@ -10,7 +10,7 @@ const {
     WidgetMapProps,
     WidgetFor,
     WidgetFragment
-} = com.onionpancakes.veil.test_js.components;
+} = dev.onionpancakes.veil.test_js.components;
 
 
 it("Widget", () => {

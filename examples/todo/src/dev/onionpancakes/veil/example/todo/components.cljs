@@ -27,8 +27,8 @@
   (let [{:keys [done? text]} (.-task props)
         handleDone           (.-handleDone props)]
     (v/compile
-     [:div { ::v/classes {:TodoTask true
-                          :done     done?}}
+     [:div {::v/classes {:TodoTask true
+                         :done     done?}}
       [:label
        [:input {:type     "checkbox"
                 :checked  done?

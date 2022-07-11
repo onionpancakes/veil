@@ -2,6 +2,10 @@
 
 ClojureScript library for templating `React.createElement` calls with keyword vectors.
 
+# Status
+
+Currently for my personal use. Future breaking changes possible.
+
 ## Motivation
 
 With the release of React [hooks](https://reactjs.org/docs/hooks-intro.html), it is now strait forward to write React components in ClojureScript using ordinary functions, forgoing the need of wrapper libraries. However, writing components using direct calls to `React.createElement` is verbose. In JavaScript, JSX provides templating of `React.createElement` calls. Veil is meant to be the JSX equivalent for ClojureScript by providing a macro to template `React.createElement` calls with.
